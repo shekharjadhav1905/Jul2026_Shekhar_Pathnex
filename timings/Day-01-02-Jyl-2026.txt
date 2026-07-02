@@ -1,0 +1,11 @@
+#What i did today
+- attended live lecture in morning
+- learn how to create an ec2 instance
+- installed git on EC2 on amazon linux
+- Learned how to configure git and push on git 
+
+
+#Tomorrows task
+- Attend morning class 
+- practice coding for day 2
+- push code on day 2 branch 

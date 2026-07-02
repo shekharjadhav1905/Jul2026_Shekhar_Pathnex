@@ -1,0 +1,122 @@
+---
+- name: Install Nginx on Pathnex server #kuch bhi likh sakte hai eg. - name: install docker
+  hosts: all
+  become: yes # its just like writing sudo
+
+  tasks:
+    - name: Install Nginx # kuch bhi likh sakte hai eg. - name: install apache
+      yum:
+        name: nginx
+        state: present
+
+
+#Checkout a GIT repository in gitlab CI
+
+stages:
+  - checkout
+
+git-checkout:
+  stage: checkout
+  script:
+    - git clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - ls -la
+
+
+#Git integration
+#Jenkins pipeline - for git checkout
+#How to checkout a git repo and list files
+
+pipeline{
+    agent any
+    stages {
+        stage {
+            git branch: 'main', url: 'https://github.com/Pathnex/sample-java-app.git'
+        }
+    }
+         stage('List Files') {
+             steps {
+                 sh 'ls -la'
+        }
+    }
+}
+
+# Create NginX Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pathnex-pod
+spec:
+  containers:
+    - name: web
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+---
+# family of related kubernetes resource for apps/v1
+#kind: Deployment, StatefulSet, DaemonSet, ReplicaSet
+
+#family of related kubernetes resource for v1
+#kind: Pod, Service, ConfigMap, Secret
+
+#Usually fixed
+# apiVersion
+# kind
+# spec
+# selector
+# template
+# containers
+# ports
+
+#Usually customized
+# metadata.name
+# replicas
+# labels
+# container name
+# image
+# containerPort
+
+
+
+#Day 1 Print date and hostname
+#!/bin/bash
+echo "Date: $(date)"
+echo "hostname: $(hostname)"
+
+
+ provider "aws" {   
+     region = "us-east-1"
+ }
+
+ resource "aws_instance" "PathnexEC2" {
+     ami = "ami-0abcd1234abcd1234"
+     instance_type = "t2.micro"
+
+     tags = {
+         Name = "PathnexEC2"
+     }
+ }
+
+# provider can be changed Azure gcp
+# provider is a fixed word
+
+# region : Can be changed - us-east-1 ap-south-1, eu-west-1
+
+# resource : "TYPE" "Name" 
+# TYPE : "aws_instance" "Name": Any Name
+
+# ami(Amazon machine image) : which OS/ Template to use 
+
+# tags : Used as labels to identify resources 
+
+# 1. Use AWS.
+# 2. Work in the us-east-1 region.
+# 3. Create an EC2 virtual machine.
+# 4. Call it PathnexEC2 inside Terraform.
+# 5. Use this machine image (AMI).
+# 6. Make it a t2.micro server.
+# 7. Add a tag called Name.
+# 8. Set the Name tag to PathnexEC2.
+# 9. Finish creating the server definition.
+
+
