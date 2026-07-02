@@ -1,0 +1,8 @@
+# What i did today
+- Created git repo and pushed day 1 and pushing day 2 code to git now 
+- Created a new branch and practiced coding for atleast an hour
+
+
+# Tomorrow's plan
+
+- will put the code into chatGPT and learn what is it about and what is it doing- Also will try to write it down on my own 
