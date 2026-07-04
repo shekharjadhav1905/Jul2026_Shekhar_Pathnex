@@ -1,0 +1,119 @@
+# Day 2
+- name: Install and start Nginx on pathnex
+  hosts: all
+  become: yes
+
+- name: Enable Nginx
+  yum:
+    name: nginx
+    state: present
+- name: Enable Nginx
+  service:
+    name: Nginx
+    state: started
+    enabled: yes
+
+---
+
+
+# Gitlab CI- maven build
+stages:
+  - build
+  - test
+  - package
+maven-build:
+  stage: build
+  image: maven:2.8.3-jdk-17
+  script:
+    - git clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - mvn clean compile
+maven-test:
+  stage: test
+  image: maven:2.8.3-jdk-17
+  script:
+    - cd sample-java-app
+    - mvn test
+maven-package:
+  stage: package
+  image: maven:2.8.3-jdk-17
+  script:
+    - cd sample-java-app
+    - mvn package
+
+// Day 2 Jenkins pipeline - Maven Build
+// Learn how to complile, test, and package a JAVA project using maven
+
+pipeline {
+    agent any
+    tools {
+        maven 'Maven-2.2.1'
+        jdk 'JDK-17'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                 git url: 'https://github.com/Pathnex/sample-java-app.git'
+            }
+        }
+        stage('compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('package') {
+            steps {
+                sh mvn package
+            }
+        }
+    }
+}
+
+## Deployment with 2 replicas #Day2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pathnex-deployment #JUST A NAME kuch bhi de sakte hai
+spec: #configuration detail
+  replicas: 2 #can be changed
+  selector: #keyword remains same but content can change
+    matchLabels:
+      app: pathnex-app #Selector and template must match
+    template:
+      metadata:
+        labels:
+          app: pathnex-app
+      spec:
+        containers:
+          - name: app #can be anything
+            image: nginx
+            ports:
+              - containerPort: 80
+
+
+
+# Shell script for Disk Usage
+
+#!/bin/bash
+df -h
+
+provider "aws" {
+  region = ap-south-1
+}
+
+resource "aws_instance" "Pathnex" {
+  ami = "ami-0abcd1234abcd1234"
+  instance_type = t2.micro
+
+  tags = {
+    Name = "Pathnex-server"
+    Environment = "Training"
+    Owner = "PathnexStudent" 
+  }
+}
+
