@@ -1,0 +1,11 @@
+# What i did today 
+
+- Attended live lecture 
+- learnt about basic linux fundamentals 
+- created EC2 instance on aws and launched an ec2 machine
+- practiced coding for 1.5 hours
+
+# Tomorrow's plan
+
+- Complete linux with all commands performed 
+- practice interview questions from day 1 to 3
