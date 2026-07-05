@@ -1,0 +1,110 @@
+#Create multiple packages
+---
+- name: Install packages for Pathnex
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Install tools
+      yum:
+        - git
+        - wget
+      state: present
+
+
+#  GitLab CI — Parallel Jobs
+# You will learn how to **run parallel jobs in GitLab CI**.
+
+stages:
+  - build-test
+maven-build:
+  stage: build-test
+  image: maven:3.2.1-jdk-17
+  script:
+    - git clone clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - mvn clean compile
+  parallel: 1
+
+maven-test:
+  stage: build-test
+  image: maven:3.2.1-jdk-17
+  script:
+    - cd sample-java-app
+    - mvn test
+  parallel: 1
+
+
+
+// Parallel Build and test
+// How to run build and test in parallel
+
+pipeline {
+    agent any
+    stages {
+        stage('Parallel Tasks') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        sh 'mvn clean complile'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        sh 'mvn test'
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment # can be anything
+  labels:
+    app: mongodb # can be multiple labels
+  spec:
+    replicas: 1
+    selector: # konse pod ko manage karna hai
+      matchLabels:
+        app: mongodb
+    template: # pods ka  specifications
+      metadata:
+        labels:
+        app: mongodb
+      spec:
+        containers:
+          - name: mongodb # container name mubst be unique
+            image: mongo #dockerhubname
+            ports:
+              - containerPort: 27017
+            env:
+              - name: MONGODB_INITDB_ROOT_USERNAME
+                value: ""
+              - name: MONGO_INITDB_ROOT_PASSWORD
+                value: ""
+
+
+Terraform — EC2 with Key Pair (t2.micro)
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_key_pair" "PathnexKey" {
+  key_name   = "PathnexKey"
+  public_key = "ssh-rsa AAAA...."
+}
+
+resource "aws_instance" "PathnexEC2" {
+  ami           = "ami-0abcd1234abcd1234"
+  instance_type = "t2.micro"
+  key_name      = aws_key_pair.PathnexKey.key_name
+
+  tags = {
+    Name = "Pathnex-EC2"
+  }
+}
