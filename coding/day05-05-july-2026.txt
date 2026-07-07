@@ -1,0 +1,94 @@
+# Handler to Restart Nginx
+---
+- name: Manage Nginx
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update config file
+      copy:
+        src: index.html
+        dest: /usr/share/nginx/html/index.html
+      notify: Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+
+
+# Gitlab CI- USE env variables
+# Learn how to use CI variable in gitlab pipelines
+
+stages:
+  - build
+variables:
+  INSTITUTE_NAME: "shekhar"
+build:
+  stage: build
+  image: maven:3.2.1-jdk-17
+  script:
+    - git clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - echo "Welcome to $INSTITUTE_NAME Devops Training"
+    - mvn clean package -Dinstitute.name=$INSTITUTE_NAME
+
+
+// Use Env variables
+// How to use env variables in Jenkins pipeline
+
+pipeline {
+    agent any
+    environment {
+        INSTITUTE_NAME = 'Pathnex'
+    }
+    stages {
+        stage('Print'){
+            steps {
+                sh 'echo "Welcome to $INSTITUTE_NAME devops training"'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package -Dinstitue.name=$INSTITUTE_NAME'
+            }
+        }
+    }
+}
+
+
+# Create a clusterIP service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pathnex-service
+spec:
+  selector:
+    app: pathnex-app
+  ports:
+    - port: 80
+      targetport: 80
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: shekhar-limited-pod
+spec:
+  container:
+    - name: app
+      image: nginx
+      resources:
+        limits:
+          memory: "256Mi"
+          cpu: "500m"
+
+#EC2 with user data (c6.xlarge)
+
+resource "aws_instance" "shekharEC2" {
+  ami = "ami-0abcd1234abcd1234"
+  instance_type = "c6a.12xlarge"
+  user_data = EOF
+}
