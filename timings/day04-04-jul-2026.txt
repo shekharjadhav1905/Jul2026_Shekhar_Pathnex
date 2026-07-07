@@ -1,0 +1,13 @@
+#what i did today
+
+- Attended live lecture in morning
+- practiced terraform coding with ansible for 1 hour where i created a instance with terraform plan which created t2.micro ec2 instance on aws 
+- Watched youtube video for the same 
+- practice basic linux fundamentals 
+- given Evening class session
+
+#what i will do tomorrow
+
+- Will start with attending monring lecture 
+- try to run a custom shell script with will do basic things 
+- learn and execute CRONJOB 
