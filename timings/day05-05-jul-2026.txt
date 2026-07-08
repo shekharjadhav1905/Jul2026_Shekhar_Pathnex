@@ -1,0 +1,9 @@
+# What i did today 
+- started with watching and attending morning class for 2 hours
+- learnt about git as a version control system
+- used familiar commands like git clone, add , pull, commit etc. 
+- Will do the interview questions now for git and linux scripting 
+
+# Tomorrow's plan 
+
+- write down ansible and terraform and kubernetes code on a white board so that i can view the difference between the syntax and will be easy for me to remeber it for a longer period of a time 
