@@ -1,0 +1,11 @@
+#what i did today
+
+- Attended morning class 
+- practiced coding on white board for 1 hour
+- pushed today's code to git 
+- Sent first introduction video
+
+# tomorrow's plan 
+
+- Will use chatGPT to understand the Terraform code for this week then ansible and then kubernetes
+- 
