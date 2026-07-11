@@ -1,0 +1,134 @@
+#Variables, VPC, Probes, Loops
+---
+- name: Install packages for Xyz using variable
+  hosts: all
+  become: yes
+
+  vars:
+    xyz_packages:
+      - tree
+      - unzip
+      - vim
+  tasks:
+    - name: Install required packages
+      yum:
+        name: { { xyz_packages } }
+        state: present
+
+
+#Conditional Jobs
+
+#learn how to run jobs based on variables or branches
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: maven:3.2.1-jdk
+  script:
+    - git clone  clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - mvn clean compile
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - echo "Deploying to $CI_ENVIRONMENT_NAME by Shekhar"
+  only:
+    variables:
+      - $CI_ENVIRONMENT_NAME == "dev"
+
+
+// Jenkins Pipeline - condional execution 
+//  Learn how to run stages based on branch or parameter conditions
+pipeline {
+    agent any
+    parameters {
+        string(name: 'ENVIRONMENT' , defaultvalue: 'dev' , description: 'Deployment Env')
+    }
+    environment {
+        INSTITUTE_NAME = "Shekhar"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main' , url: 'https://github.com/Pathnex/sample-java-app.git'
+            }
+        }
+        stage('Build') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        stage('Deploy') {
+            when {
+                expression { params.ENVIRONMENT == 'dev'}
+            }
+            steps {
+                sh 'echo "Deploying to $ENVIRONMENT by $INSTITUTE_NAME'
+            }
+        }
+    }
+}
+
+
+# Add liveness and readiness probes
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: shekhar-probe-pod
+spec:
+  containers:
+    - name: web
+      image: nginx
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+          initialDealySeconds: 3
+
+# Shell scripting for looping through list 
+#!/bin/bash
+
+for items in Shekhar DevOps Training; do
+    echo "Item: $item"
+done
+
+
+# Create VPC + Subnet
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_vpc" "PathnexVPC" {
+  cidr_block = "10.10.0.0/16"
+
+  tags = {
+    Name = "Pathnex-VPC"
+  }
+}
+
+resource "aws_subnet" "PathnexSubnet" {
+  vpc_id                  = aws_vpc.PathnexVPC.id
+  cidr_block              = "10.10.1.0/24"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "Pathnex-Subnet"
+  }
+}

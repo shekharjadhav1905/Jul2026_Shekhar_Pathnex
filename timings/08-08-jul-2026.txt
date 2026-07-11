@@ -1,0 +1,16 @@
+#What i did today
+
+- Attended morning lecture
+- Started learning docker 
+- used docker run
+- docker ps 
+- docker ps -a 
+- docker prune 
+- Created Dockerfile 
+- Gave evening speech
+
+# Tomorrow's Plan
+
+- write week 1 code by hands on whiteboard 
+- attend morning lectures
+- practice week 2 L2 codes
