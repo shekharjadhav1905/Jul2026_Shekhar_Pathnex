@@ -1,0 +1,9 @@
+# What i did today?
+- Attended morning class
+- practiced coding for half an hour
+- practicing terraform syntx for this week
+
+#plan for tomorrow
+- Will continue attending the morning class
+- will continue practicing terraform syntax
+- push git code and also put introduction video 
