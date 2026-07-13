@@ -1,0 +1,81 @@
+# Templates, internet gateway, configMp, CPU Load
+
+# Using Jinja2 template
+
+---
+- name: Deploy template for Pathnex
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Copy Template file
+      template:
+        src: pathnex.conf.j2
+        dest: /etc/pathnex.conf
+
+
+# Internet Gateway
+
+resource "aws_internet_gateway" "shekhar" {
+  vpc_id = aws.vpc.ShekharVpc.id
+
+  tags = {
+    Name = "shekhar"
+  }
+}
+
+
+# create ConfigMap
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pathnex-config
+data:
+  APP_MODE: "production"
+  WELCOME_MSG: "Hello There"
+
+
+// Archive artifacts 
+// Learn to save and build artifacts for future use
+
+pipeline {
+    agent any
+    environment {
+        INSTITUTE_NAME = "shekhar"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/Pathnex/sample-java-app.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacrs: 'target/*.jar , fingerprint: true'
+            }
+        }
+    }
+}
+
+# Store artifacts in GITLAB CI
+stages:
+  - build
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  script:
+    - git clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - mvn clean package
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 1 week
+
