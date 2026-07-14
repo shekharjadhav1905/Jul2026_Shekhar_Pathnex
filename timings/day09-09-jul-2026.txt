@@ -1,0 +1,5 @@
+# What did i do today
+
+- Attended morning class
+- Studied kubernetes architecture 
+- wrote YAML file for Deployment 
