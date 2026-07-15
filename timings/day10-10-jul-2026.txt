@@ -1,0 +1,10 @@
+# What i did today 
+- Attended morning class
+- practiced code for 1 hour
+- Gave evening lecture
+- commented on the video
+- Now Pushing code to git
+
+# Tomorrow's plan
+- Attend morning lecture
+- Try making a EKS cluster 
