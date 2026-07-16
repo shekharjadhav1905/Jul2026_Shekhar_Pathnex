@@ -1,0 +1,12 @@
+# What i did today
+
+- Attended morning class
+- commented on the video 
+- Setup EKS cluster
+- solving errors regarding cluster setup
+
+# Tomorrow's plan
+
+- Attend morning session
+- practice and comment on the video
+- Learn Terraform code 
