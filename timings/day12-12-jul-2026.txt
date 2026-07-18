@@ -1,0 +1,10 @@
+# What i did today
+- Attended morning lecture
+- Gave evening speech 
+- Created Kubernetes cluster 
+- Learnt basic commands
+
+#Tomorrow's Plan 
+- Attend morning lecture
+- Practice Coding 
+- Try to improve
