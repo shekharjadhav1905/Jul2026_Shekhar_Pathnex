@@ -1,0 +1,253 @@
+# Mini Projects 
+
+provider "aws" {
+  region = var.aws_region
+}
+
+# -----------------------------
+# VPC
+# -----------------------------
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "demo-vpc"
+  }
+}
+
+# -----------------------------
+# Public Subnet
+# -----------------------------
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "${var.aws_region}a"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "public-subnet"
+  }
+}
+
+# -----------------------------
+# Internet Gateway
+# -----------------------------
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "demo-igw"
+  }
+}
+
+# -----------------------------
+# Route Table
+# -----------------------------
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+
+  tags = {
+    Name = "public-rt"
+  }
+}
+
+# -----------------------------
+# Route Table Association
+# -----------------------------
+resource "aws_route_table_association" "public" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id
+}
+
+# -----------------------------
+# Security Group
+# -----------------------------
+resource "aws_security_group" "ec2_sg" {
+  name   = "ec2-security-group"
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# -----------------------------
+# EC2 Instance
+# -----------------------------
+resource "aws_instance" "server" {
+
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  subnet_id              = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+
+  key_name = var.key_name
+
+  tags = {
+    Name = "Terraform-EC2"
+  }
+}
+
+# Ansible Project
+---
+- name: Install and Configure Nginx
+  hosts: web
+  become: yes
+
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start and Enable Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Copy HTML File
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+
+# Kurnetes project 
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nginx-deployment
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+
+    metadata:
+      labels:
+        app: nginx
+
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: nginx-service
+
+spec:
+
+  selector:
+    app: nginx
+
+  ports:
+  - port: 80
+    targetPort: 80
+
+  type: NodePort
+
+# Shell Script
+
+#!/bin/bash
+
+echo "===== System Information ====="
+
+echo
+echo "CPU Usage:"
+top -bn1 | grep "Cpu(s)"
+
+echo
+echo "Memory Usage:"
+free -h
+
+echo
+echo "Disk Usage:"
+df -h
+
+Scheduled Pipelines
+
+## Jenkins Pipeline — Scheduled Build
+You will learn how to **schedule a Jenkins pipeline using cron**.
+
+pipeline {
+    agent any
+    environment {
+        INSTITUTE_NAME = "Pathnex"
+    }
+    triggers {
+        cron('H 2 * * *') // every day at 2 AM
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/Pathnex/sample-java-app.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+    }
+}
+
+
+#  GitLab CI — Scheduled Pipeline
+You will learn how to **schedule GitLab CI pipelines via cron**.
+
+stages:
+  - build
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  script:
+    - git clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - mvn clean package
