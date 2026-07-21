@@ -1,0 +1,10 @@
+# What i did today
+- Attended morning lecture
+- Learnt about terraform practically
+- practice coding for kubernetes for half hour
+- will push the code 
+
+# Tomorrow's Plan
+- Create a cluster without looking into the steps 
+- Create a custom script to monitor health 
+- push git code to the repo . 
