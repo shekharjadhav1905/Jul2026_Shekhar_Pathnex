@@ -1,0 +1,9 @@
+# What I did today 
+- Attended morning class
+- Practiced coding for one hour 
+- Practiced terraform 
+
+# Tomorrow's Plan 
+- Attend morning class
+- Start with CI/CD practice 
+- push code to GIT
