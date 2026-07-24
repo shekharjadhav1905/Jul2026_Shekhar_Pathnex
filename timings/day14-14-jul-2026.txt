@@ -1,0 +1,11 @@
+# What i did today 
+- Completed with kubernetes day 2/4 
+- learnt about helm charts today
+- what it does , why is it required, commands to use helm etc. 
+- Did coding practice for week 2 
+
+
+#Tomorrow's plan
+- Complete tomorrow's video in morning 
+- practice day 3 of kubernetes 
+- try to understand helm charts better

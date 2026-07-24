@@ -1,0 +1,11 @@
+# What i did today 
+
+- Practiced creating a EKS cluster and failed again
+- Trying to create one again using chatgt 
+- practiced coding for broken files 
+
+
+# Tomorrow's Plan
+- Hopefully understand to create a cluster
+- attend morning session 
+- - practice terraform and kubernetes scripts 
