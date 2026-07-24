@@ -1,0 +1,11 @@
+#what I did today
+- Attended morning lecture
+- did not get much time to practice code but wrote the daily code 
+- pushed the code to GitHub 
+- sent introduction video 
+
+
+# Tomorrow's Plan
+- Attend morning lecture 
+- practice code 
+- create a ansible playbook myself 
