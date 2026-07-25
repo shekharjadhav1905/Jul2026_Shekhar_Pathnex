@@ -1,0 +1,10 @@
+# what did i do today
+- Attended morning session on youtube
+- Understood monitoring tool like Prometheus and Graffana
+- practiced YAML syntax 
+- Pushed code for day 19 on git 
+# Tomorrow's plan 
+
+- Attend morning lecture
+- write down ansible and kubernetes syntax with hands on whiteboard
+- 
