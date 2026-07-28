@@ -1,0 +1,9 @@
+#What i did today
+- Attended morning lecture 
+- Learned about roles of SRE Engineer
+- practiced coding for half an hour
+- wrote YAML file on white board
+- wrote a docker compose with MYSQL
+
+# Tomorrow's Plan
+- Attend morning class and learn about AiOps and secOps
