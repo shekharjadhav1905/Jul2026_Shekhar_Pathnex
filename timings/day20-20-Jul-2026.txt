@@ -1,0 +1,14 @@
+# What i did today 
+
+- Did not attend today's morning class but watched video on youtube about ELK stack
+-learnt the basic concept of metrics logs etc.
+- Git push code into repo
+- wrote kuibernetes architecture on white board
+
+
+
+# Tomorrows's plan
+
+- Attend lecture
+- git push code
+- start learning kafka
