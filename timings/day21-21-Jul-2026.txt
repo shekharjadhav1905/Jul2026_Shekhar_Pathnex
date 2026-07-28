@@ -1,0 +1,12 @@
+# What i did today
+
+
+- Saw lectures on youtube for SSL/TLS certificate
+- where it is used and why is it used
+- made notes using the video
+- Pushed code for day21 
+
+#Tomorrow's Plan
+
+- Attend morning lecture and pratice coding on white board
+- push code and give evening lecture
